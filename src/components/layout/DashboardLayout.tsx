@@ -27,11 +27,18 @@ import profileImg from "../../assets/profile.png";
 import { dashboards, pages } from "../../data/nav.data";
 import { useState } from "react";
 
+type NavItem = {
+  label: string;
+  icon: React.ComponentType<{ className?: string }>;
+  to?: string;
+  children?: NavItem[];
+};
+
 function CollapsibleMenuItem({
   item,
   defaultOpen = false,
 }: {
-  item: any;
+  item: NavItem;
   defaultOpen?: boolean;
 }) {
   const [open, setOpen] = useState(defaultOpen);
@@ -51,12 +58,12 @@ function CollapsibleMenuItem({
       </button>
 
       {/* Submenu */}
-      {open && item.children?.length > 0 && (
+      {open && item.children && item.children.length > 0 && (
         <SidebarMenuSub>
-          {item.children.map((child: any) => (
+          {item.children.map((child: NavItem) => (
             <SidebarMenuSubButton key={child.label} asChild>
               <Router.Link
-                to={child.to}
+                to={child.to || "#"}
                 className="flex items-center gap-2 pl-7 pr-2 py-1.5 text-sm font-light text-muted-foreground hover:text-foreground transition-colors"
               >
                 <span>{child.label}</span>
@@ -123,20 +130,12 @@ function RightRail() {
 
 export default function DashboardLayout({
   children,
-  title = "Dashboards",
   breadcrumb = ["Dashboards", "Default"],
 }: {
   children: React.ReactNode;
-  title?: string;
   breadcrumb?: string[];
 }) {
-  let location;
-  try {
-    location = Router.useLocation();
-  } catch (e) {
-    // Not inside a Router (e.g., during tests or isolated render). Fallback to root path.
-    location = { pathname: "/" } as { pathname: string };
-  }
+  const location = Router.useLocation();
 
   return (
     <SidebarProvider>

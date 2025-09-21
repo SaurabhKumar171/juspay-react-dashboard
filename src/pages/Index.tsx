@@ -96,7 +96,13 @@ const topProducts = [
 ];
 
 // A simple icon component to match the screenshot
-const TrendingIcon = ({ isUp, className = "" }) => (
+const TrendingIcon = ({
+  isUp,
+  className = "",
+}: {
+  isUp: boolean;
+  className?: string;
+}) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     fill="none"

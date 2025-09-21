@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc -b && vite build",
+    "build": "tsc --noEmit && vite build",
     "lint": "eslint .",
     "preview": "vite preview"
   },
@@ -100,6 +100,7 @@
     "typescript-eslint": "^8.43.0",
     "vaul": "^1.1.2",
     "vite": "^7.1.6",
+    "vite-plugin-checker": "^0.10.3",
     "vitest": "^3.2.4"
   }
 }
